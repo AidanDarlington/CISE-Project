@@ -1,0 +1,27 @@
+{
+    "version": 2,
+    "projects": [
+      {
+        "name": "frontend",
+        "root": "frontend",
+        "builds": [
+          { "src": "frontend/api/**/*.js", "use": "@vercel/node" },
+          { "src": "frontend/pages/**/*.js", "use": "@vercel/next" }
+        ],
+        "routes": [
+          { "src": "/api/(.*)", "dest": "/api/$1" },
+          { "src": "/(.*)", "dest": "/pages/$1" }
+        ]
+      },
+      {
+        "name": "backend",
+        "root": "backend",
+        "builds": [
+          { "src": "backend/api/**/*.js", "use": "@vercel/node" }
+        ],
+        "routes": [
+          { "src": "/api/(.*)", "dest": "/api/$1" }
+        ]
+      }
+    ]
+  }
