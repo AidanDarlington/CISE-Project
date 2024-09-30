@@ -8,15 +8,9 @@ function ShowBookList() {
 
   useEffect(() => {
     fetch('http://localhost:8082/api/books')
-      .then((res) => {
-        return res.json();
-      })
-      .then((books) => {
-        setBooks(books);
-      })
-      .catch((err) => {
-        console.log('Error from ShowBookList: ' + err);
-      });
+      .then((res) => res.json())
+      .then((books) => setBooks(books))
+      .catch((err) => console.log('Error from ShowBookList: ' + err));
   }, []);
 
   const bookList =
@@ -34,18 +28,19 @@ function ShowBookList() {
           </div>
 
           <div className='col-md-11'>
-            <Link
-              href='/create-book'
-              className='btn btn-outline-warning float-right'
-            >
+            <Link href='/create-book' className='btn btn-outline-warning' style={{ float: 'left' }}>
               + Add New Book
             </Link>
+            <Link href='/signin' className='btn btn-outline-info' style={{ float: 'right' }}>
+              Sign In
+            </Link>
+            <div style={{ clear: 'both' }}></div>
             <br />
             <br />
             <hr />
           </div>
         </div>
-
+        
         <div className='list'>{bookList}</div>
       </div>
     </div>

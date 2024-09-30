@@ -5,7 +5,6 @@ import { Book, DefaultEmptyBook } from "./Book";
 
 const CreateBookComponent = () => {
   const navigate = useRouter();
-
   const [book, setBook] = useState<Book>(DefaultEmptyBook);
 
   const onChange = (event: ChangeEvent<HTMLInputElement>) => {
@@ -13,13 +12,16 @@ const CreateBookComponent = () => {
   };
 
   const onSubmit = (event: FormEvent<HTMLFormElement>) => {
-    event.preventDefault()
+    event.preventDefault();
     console.log(book);
-    fetch("http://localhost:8082/api/books", {method: 'POST', headers: {"Content-Type": "application/json"}, body: JSON.stringify(book)})
+    fetch("http://localhost:8082/api/books", {
+      method: 'POST',
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(book)
+    })
       .then((res) => {
         console.log(res);
         setBook(DefaultEmptyBook);
-        // Push to /
         navigate.push("/");
       })
       .catch((err) => {
@@ -34,7 +36,10 @@ const CreateBookComponent = () => {
           <div className="col-md-8 m-auto">
             <br />
             <Link href="/" className="btn btn-outline-warning float-left">
-              Show BooK List
+              Show Book List
+            </Link>
+            <Link href="/signin" className="btn btn-outline-info float-right">
+              Sign In
             </Link>
           </div>
           <div className="col-md-10 m-auto">
@@ -44,7 +49,7 @@ const CreateBookComponent = () => {
               <div className="form-group">
                 <input
                   type="text"
-                  placeholder="Title of the Book"
+                  placeholder="Article Title"
                   name="title"
                   className="form-control"
                   value={book.title}

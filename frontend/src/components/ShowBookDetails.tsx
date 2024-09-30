@@ -82,6 +82,9 @@ function ShowBookDetails() {
             <Link href='/' className='btn btn-outline-warning float-left'>
               Show Book List
             </Link>
+            <Link href='/signin' className='btn btn-outline-info float-right'>
+              Sign In
+            </Link>
           </div>
           <br />
           <div className='col-md-8 m-auto'>

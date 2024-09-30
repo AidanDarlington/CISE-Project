@@ -1,4 +1,4 @@
-import React, { useState, useEffect, ChangeEvent, FormEvent, ChangeEventHandler } from 'react';
+import React, { useState, useEffect, ChangeEvent, FormEvent } from 'react';
 import { useParams, useRouter } from 'next/navigation';
 import { Book, DefaultEmptyBook } from './Book';
 import Link from 'next/link';
@@ -10,15 +10,9 @@ function UpdateBookInfo() {
 
   useEffect(() => {
     fetch(`http://localhost:8082/api/books/${id}`)
-      .then((res) => {
-        return res.json();
-      })
-      .then((json) => {
-        setBook(json);
-      })
-      .catch((err) => {
-        console.log('Error from UpdateBookInfo: ' + err);
-      });
+      .then((res) => res.json())
+      .then((json) => setBook(json))
+      .catch((err) => console.log('Error from UpdateBookInfo: ' + err));
   }, [id]);
 
   const inputOnChange = (event: ChangeEvent<HTMLInputElement>) => {
@@ -32,13 +26,13 @@ function UpdateBookInfo() {
   const onSubmit = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 
-    fetch(`http://localhost:8082/api/books/${id}`, {method: 'PUT', headers: {"Content-Type": "application/json"}, body: JSON.stringify(book)})
-      .then((res) => {
-        router.push(`/show-book/${id}`);
-      })
-      .catch((err) => {
-        console.log('Error from UpdateBookInfo: ' + err);
-      });
+    fetch(`http://localhost:8082/api/books/${id}`, {
+      method: 'PUT',
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(book)
+    })
+      .then(() => router.push(`/show-book/${id}`))
+      .catch((err) => console.log('Error from UpdateBookInfo: ' + err));
   };
 
   return (
@@ -48,12 +42,15 @@ function UpdateBookInfo() {
           <div className='col-md-8 m-auto'>
             <br />
             <Link href='/' className='btn btn-outline-warning float-left'>
-              Show BooK List
+              Show Book List
+            </Link>
+            <Link href='/signin' className='btn btn-outline-info float-right'>
+              Sign In
             </Link>
           </div>
           <div className='col-md-8 m-auto'>
             <h1 className='display-4 text-center'>Edit Book</h1>
-            <p className='lead text-center'>Update Book&quot;s Info</p>
+            <p className='lead text-center'>Update Book&apos;s Info</p>
           </div>
         </div>
 
