@@ -1,12 +1,12 @@
 'use client'
 
-import ShowBookList from "@/components/ShowBookList";
+import ShowArticleList from "@/components/ShowArticleList";
 import React from "react";
 
 export default function Home() {
   return (
     <main>
-      <ShowBookList />
+      <ShowArticleList />
     </main>
   );
 }
