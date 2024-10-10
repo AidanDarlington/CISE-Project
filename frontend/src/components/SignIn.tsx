@@ -10,22 +10,34 @@ const SignIn = () => {
   const handleEmailChange = (event: ChangeEvent<HTMLInputElement>) => {
     setEmail(event.target.value);
   };
-
+  
   const handlePasswordChange = (event: ChangeEvent<HTMLInputElement>) => {
     setPassword(event.target.value);
   };
-
-  const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
+  
+  const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    // Rudimentary sign-in logic (e.g., mock authentication)
-    if (email === 'user@example.com' && password === 'password') {
+  
+    // Hardcoded credentials for demonstration purposes
+    const hardcodedCredentials = [
+      { email: 'admin@example.com', password: 'adminpassword', role: 'admin' },
+      { email: 'analyst@example.com', password: 'analystpassword', role: 'analyst' },
+      { email: 'viewer@example.com', password: 'viewerpassword', role: 'viewer' },
+    ];
+  
+    const user = hardcodedCredentials.find(
+      (cred) => cred.email === email && cred.password === password
+    );
+  
+    if (user) {
       alert('Sign-in successful');
+      localStorage.setItem('role', user.role);
       router.push('/');
     } else {
       alert('Invalid credentials');
     }
   };
-
+  
   return (
     <div className='SignIn'>
       <div className='container'>

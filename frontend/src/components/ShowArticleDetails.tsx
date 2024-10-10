@@ -1,4 +1,3 @@
-// ShowBookDetails.tsx (renamed to ShowArticleDetails.tsx)
 'use client'
 
 import React, { useState, useEffect } from 'react';
@@ -8,11 +7,15 @@ import Link from 'next/link';
 
 function ShowArticleDetails() {
   const [article, setArticle] = useState<Article>(DefaultEmptyArticle);
+  const [role, setRole] = useState<string | null>(null);
 
   const id = useParams<{ id: string }>().id;
   const navigate = useRouter();
 
   useEffect(() => {
+    const storedRole = localStorage.getItem('role');
+    setRole(storedRole);
+
     fetch(`http://localhost:8082/api/articles/${id}`)
       .then((res) => res.json())
       .then((json) => setArticle(json))
@@ -91,25 +94,29 @@ function ShowArticleDetails() {
             <hr /> <br />
           </div>
           <div className='col-md-10 m-auto'>{ArticleItem}</div>
-          <div className='col-md-6 m-auto'>
-            <button
-              type='button'
-              className='btn btn-outline-danger btn-lg btn-block'
-              onClick={() => {
-                onDeleteClick(article._id || "");
-              }}
-            >
-              Delete Article
-            </button>
-          </div>
-          <div className='col-md-6 m-auto'>
-            <Link
-              href={`/edit-article/${article._id}`}
-              className='btn btn-outline-info btn-lg btn-block'
-            >
-              Edit Article
-            </Link>
-          </div>
+          {role === 'admin' && (
+            <div className='col-md-6 m-auto'>
+              <button
+                type='button'
+                className='btn btn-outline-danger btn-lg btn-block'
+                onClick={() => {
+                  onDeleteClick(article._id || "");
+                }}
+              >
+                Delete Article
+              </button>
+            </div>
+          )}
+          {(role === 'admin' || role === 'analyst') && (
+            <div className='col-md-6 m-auto'>
+              <Link
+                href={`/edit-article/${article._id}`}
+                className='btn btn-outline-info btn-lg btn-block'
+              >
+                Edit Article
+              </Link>
+            </div>
+          )}
         </div>
       </div>
     </div>

@@ -1,4 +1,3 @@
-// CreateBook.tsx (renamed to CreateArticle.tsx)
 import React, { ChangeEvent, FormEvent, useState } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
