@@ -40,18 +40,17 @@ function UpdateArticleInfo() {
     <div className='UpdateArticleInfo'>
       <div className='container'>
         <div className='row'>
-          <div className='col-md-8 m-auto'>
-            <br />
-            <Link href='/' className='btn btn-outline-warning float-left'>
-              Show Article List
-            </Link>
-            <Link href='/signin' className='btn btn-outline-info float-right'>
-              Sign In
-            </Link>
-          </div>
-          <div className='col-md-8 m-auto'>
+        <div className='col-md-8 m-auto'>
             <h1 className='display-4 text-center'>Edit Article</h1>
             <p className='lead text-center'>Update Article&apos;s Info</p>
+          </div>
+          <div className='col-md-11 d-flex justify-content-between align-items-center mb-4'>
+            <Link href='/' className='btn btn-black btn-shift-right'>
+              Show Article List
+            </Link>
+            <Link href='/signin' className='btn btn-black'>
+              Sign In
+            </Link>
           </div>
         </div>
 
@@ -148,7 +147,7 @@ function UpdateArticleInfo() {
 
             <button
               type='submit'
-              className='btn btn-outline-info btn-lg btn-block'
+              className="btn btn-black mt-4 mb-4 w-100"
             >
               Update Article
             </button>

@@ -78,27 +78,26 @@ function ShowArticleDetails() {
     <div className='ShowArticleDetails'>
       <div className='container'>
         <div className='row'>
-          <div className='col-md-10 m-auto'>
-            <br /> <br />
-            <Link href='/' className='btn btn-outline-warning float-left'>
+        <div className='col-md-8 m-auto'>
+            <h1 className='display-4 text-center'>Article&apos;s Record</h1>
+            <p className='lead text-center'>View Article&apos;s Info</p>
+            <hr />
+          </div>
+          <div className='col-md-11 d-flex justify-content-between align-items-center mb-4'>
+            <Link href='/' className='btn btn-black btn-shift-right'>
               Show Article List
             </Link>
-            <Link href='/signin' className='btn btn-outline-info float-right'>
+            <Link href='/signin' className='btn btn-black'>
               Sign In
             </Link>
           </div>
           <br />
-          <div className='col-md-8 m-auto'>
-            <h1 className='display-4 text-center'>Article&apos;s Record</h1>
-            <p className='lead text-center'>View Article&apos;s Info</p>
-            <hr /> <br />
-          </div>
           <div className='col-md-10 m-auto'>{ArticleItem}</div>
           {role === 'admin' && (
             <div className='col-md-6 m-auto'>
               <button
                 type='button'
-                className='btn btn-outline-danger btn-lg btn-block'
+                className='btn btn-danger btn-shift-right'
                 onClick={() => {
                   onDeleteClick(article._id || "");
                 }}
@@ -111,7 +110,7 @@ function ShowArticleDetails() {
             <div className='col-md-6 m-auto'>
               <Link
                 href={`/edit-article/${article._id}`}
-                className='btn btn-outline-info btn-lg btn-block'
+                className='btn btn-black btn-edit-right'
               >
                 Edit Article
               </Link>

@@ -17,4 +17,13 @@ export declare class ArticleController {
     } & {
         __v?: number;
     }>;
+    approveArticle(id: string): Promise<{
+        message: string;
+    }>;
+    denyArticle(id: string): Promise<{
+        message: string;
+    }>;
+    getPendingArticlesCount(): Promise<{
+        count: number;
+    }>;
 }

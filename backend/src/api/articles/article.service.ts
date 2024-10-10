@@ -21,7 +21,8 @@ export class ArticleService {
   }
 
   async create(createArticleDto: CreateArticleDto) {
-    return await this.articleModel.create(createArticleDto);
+    const newArticle = new this.articleModel({ ...createArticleDto, status: 'pending' });
+    return await newArticle.save();
   }
 
   async update(id: string, createArticleDto: CreateArticleDto) {
@@ -31,5 +32,17 @@ export class ArticleService {
   async delete(id: string) {
     const deletedArticle = await this.articleModel.findByIdAndDelete(id).exec();
     return deletedArticle;
+  }
+
+  async approveArticle(id: string) {
+    return await this.articleModel.findByIdAndUpdate(id, { status: 'approved' }).exec();
+  }
+
+  async denyArticle(id: string) {
+    return await this.articleModel.findByIdAndUpdate(id, { status: 'denied' }).exec();
+  }
+
+  async countPendingArticles(): Promise<number> {
+    return await this.articleModel.countDocuments({ status: 'pending' }).exec();
   }
 }

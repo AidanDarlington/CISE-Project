@@ -31,7 +31,8 @@ let ArticleService = class ArticleService {
         return await this.articleModel.findById(id).exec();
     }
     async create(createArticleDto) {
-        return await this.articleModel.create(createArticleDto);
+        const newArticle = new this.articleModel({ ...createArticleDto, status: 'pending' });
+        return await newArticle.save();
     }
     async update(id, createArticleDto) {
         return await this.articleModel.findByIdAndUpdate(id, createArticleDto).exec();
@@ -39,6 +40,15 @@ let ArticleService = class ArticleService {
     async delete(id) {
         const deletedArticle = await this.articleModel.findByIdAndDelete(id).exec();
         return deletedArticle;
+    }
+    async approveArticle(id) {
+        return await this.articleModel.findByIdAndUpdate(id, { status: 'approved' }).exec();
+    }
+    async denyArticle(id) {
+        return await this.articleModel.findByIdAndUpdate(id, { status: 'denied' }).exec();
+    }
+    async countPendingArticles() {
+        return await this.articleModel.countDocuments({ status: 'pending' }).exec();
     }
 };
 exports.ArticleService = ArticleService;

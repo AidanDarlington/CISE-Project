@@ -22,4 +22,15 @@ export declare class ArticleService {
     } & {
         __v?: number;
     }>;
+    approveArticle(id: string): Promise<import("mongoose").Document<unknown, {}, Article> & Article & {
+        _id: import("mongoose").Types.ObjectId;
+    } & {
+        __v?: number;
+    }>;
+    denyArticle(id: string): Promise<import("mongoose").Document<unknown, {}, Article> & Article & {
+        _id: import("mongoose").Types.ObjectId;
+    } & {
+        __v?: number;
+    }>;
+    countPendingArticles(): Promise<number>;
 }

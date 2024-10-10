@@ -28,6 +28,9 @@ export class Article {
 
   @Prop({ type: Date, default: Date.now })
   updated_date: Date;
+
+  @Prop({ required: true, enum: ['pending', 'approved', 'denied'], default: 'pending' })
+  status: string;
 }
 
 export const ArticleSchema = SchemaFactory.createForClass(Article);

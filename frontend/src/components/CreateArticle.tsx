@@ -33,18 +33,19 @@ const CreateArticleComponent = () => {
     <div className="CreateArticle">
       <div className="container">
         <div className="row">
-          <div className="col-md-8 m-auto">
-            <br />
-            <Link href="/" className="btn btn-outline-warning float-left">
+          <div className='col-md-12'>
+            <h1 className="display-4 text-center">Add Article</h1>
+            <p className="lead text-center">Create new article</p>
+          </div>
+          <div className='col-md-11 d-flex justify-content-between align-items-center mb-4'>
+            <Link href='/' className='btn btn-black btn-shift-right'>
               Show Article List
             </Link>
-            <Link href="/signin" className="btn btn-outline-info float-right">
+            <Link href='/signin' className='btn btn-black'>
               Sign In
             </Link>
           </div>
           <div className="col-md-10 m-auto">
-            <h1 className="display-4 text-center">Add Article</h1>
-            <p className="lead text-center">Create new article</p>
             <form noValidate onSubmit={onSubmit}>
               <div className="form-group">
                 <input
@@ -124,7 +125,7 @@ const CreateArticleComponent = () => {
               </div>
               <button
                 type="submit"
-                className="btn btn-outline-warning btn-block mt-4 mb-4 w-100"
+                className="btn btn-black mt-4 mb-4 w-100"
               >
                 Submit
               </button>

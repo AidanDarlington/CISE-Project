@@ -46,6 +46,10 @@ __decorate([
     (0, mongoose_1.Prop)({ type: Date, default: Date.now }),
     __metadata("design:type", Object)
 ], Article.prototype, "updated_date", void 0);
+__decorate([
+    (0, mongoose_1.Prop)({ required: true, enum: ['pending', 'approved', 'denied'], default: 'pending' }),
+    __metadata("design:type", String)
+], Article.prototype, "status", void 0);
 exports.Article = Article = __decorate([
     (0, mongoose_1.Schema)()
 ], Article);

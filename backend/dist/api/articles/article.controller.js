@@ -81,6 +81,42 @@ let ArticleController = class ArticleController {
             }, common_1.HttpStatus.NOT_FOUND, { cause: console_1.error });
         }
     }
+    async approveArticle(id) {
+        try {
+            await this.articleService.approveArticle(id);
+            return { message: 'Article approved successfully' };
+        }
+        catch {
+            throw new common_1.HttpException({
+                status: common_1.HttpStatus.BAD_REQUEST,
+                error: 'Unable to approve this article',
+            }, common_1.HttpStatus.BAD_REQUEST, { cause: console_1.error });
+        }
+    }
+    async denyArticle(id) {
+        try {
+            await this.articleService.denyArticle(id);
+            return { message: 'Article denied successfully' };
+        }
+        catch {
+            throw new common_1.HttpException({
+                status: common_1.HttpStatus.BAD_REQUEST,
+                error: 'Unable to deny this article',
+            }, common_1.HttpStatus.BAD_REQUEST, { cause: console_1.error });
+        }
+    }
+    async getPendingArticlesCount() {
+        try {
+            const count = await this.articleService.countPendingArticles();
+            return { count };
+        }
+        catch {
+            throw new common_1.HttpException({
+                status: common_1.HttpStatus.INTERNAL_SERVER_ERROR,
+                error: 'Unable to fetch pending articles count',
+            }, common_1.HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
 };
 exports.ArticleController = ArticleController;
 __decorate([
@@ -124,6 +160,26 @@ __decorate([
     __metadata("design:paramtypes", [String]),
     __metadata("design:returntype", Promise)
 ], ArticleController.prototype, "deleteArticle", null);
+__decorate([
+    (0, common_1.Put)('/:id/approve'),
+    __param(0, (0, common_1.Param)('id')),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [String]),
+    __metadata("design:returntype", Promise)
+], ArticleController.prototype, "approveArticle", null);
+__decorate([
+    (0, common_1.Put)('/:id/deny'),
+    __param(0, (0, common_1.Param)('id')),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [String]),
+    __metadata("design:returntype", Promise)
+], ArticleController.prototype, "denyArticle", null);
+__decorate([
+    (0, common_1.Get)('/pending/count'),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", []),
+    __metadata("design:returntype", Promise)
+], ArticleController.prototype, "getPendingArticlesCount", null);
 exports.ArticleController = ArticleController = __decorate([
     (0, common_1.Controller)('api/articles'),
     __metadata("design:paramtypes", [article_service_1.ArticleService])

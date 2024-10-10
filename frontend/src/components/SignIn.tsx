@@ -69,12 +69,12 @@ const SignIn = () => {
                 />
               </div>
               <br />
-              <button type='submit' className='btn btn-outline-info btn-lg btn-block'>
+              <button type='submit' className='btn btn-black'>
                 Sign In
               </button>
             </form>
             <br />
-            <Link href='/' className='btn btn-outline-warning btn-block'>
+            <Link href='/' className='btn btn-black'>
               Back to Home
             </Link>
           </div>
