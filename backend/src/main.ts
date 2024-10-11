@@ -1,41 +1,24 @@
+import { Logger } from '@nestjs/common';
+import { ConfigService } from '@nestjs/config';
 import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
-import express from 'express';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
-  app.enableCors();
-  const expressApp = express();
+  const configService = app.get(ConfigService);
+  const port = configService.get<number>('PORT') || 8082;
 
-  expressApp.use(express.json());
-
-  expressApp.get('/', (req, res) => {
-    res.send('GET request to the homepage');
+  app.enableCors({
+    origin: [
+      process.env.FRONTEND_URL,
+      /cise-project\.vercel\.app$/,
+    ],
+    methods: 'GET,HEAD,PUT,PATCH,POST,DELETE,OPTIONS',
+    credentials: true,
   });
 
-  expressApp.post('/', (req, res) => {
-    res.send('POST request to the homepage');
-  });
+  await app.listen(port);
 
-  expressApp.put('/', (req, res) => {
-    res.send('PUT request to the homepage');
-  });
-
-  expressApp.patch('/', (req, res) => {
-    res.send('PATCH request to the homepage');
-  });
-
-  expressApp.delete('/', (req, res) => {
-    res.send('DELETE request to the homepage');
-  });
-
-  expressApp.options('/', (req, res) => {
-    res.send('OPTIONS request to the homepage');
-  });
-
-  app.use(expressApp);
-
-  const port = process.env.PORT || 8082;
-  await app.listen(port, () => console.log(`Server running on port ${port}`));
+  Logger.log(`Application is running on http://localhost:${port}`, 'Speed');
 }
 bootstrap();
