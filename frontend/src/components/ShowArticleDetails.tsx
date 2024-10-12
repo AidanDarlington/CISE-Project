@@ -52,7 +52,11 @@ function ShowArticleDetails() {
           <tr>
             <th scope='row'>4</th>
             <td>Publication Year</td>
-            <td>{article.publication_year?.toString()}</td>
+            <td>
+              {article.publication_year ? 
+              new Date(article.publication_year).getFullYear().toString() : 
+            'N/A'}
+    </td>
           </tr>
           <tr>
             <th scope='row'>5</th>

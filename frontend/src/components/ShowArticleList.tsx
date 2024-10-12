@@ -40,9 +40,20 @@ function ShowArticleList() {
     setSearchWord(e.target.value);
   };
 
-  const filteredArticles = articles.filter(
-    (article) => article.claim && article.claim.toLowerCase().includes(searchWord.toLowerCase())
-  );
+  const filteredArticles = articles.filter(article => {
+    // Check if searchWord is all just 0-9
+    const isNumerical = /^\d+$/.test(searchWord);
+    
+    // If searchWord is numerical, check if it matches published_year
+    if (isNumerical) {
+      // It should be noted, publication_year that comes from the db is a string and not a date
+      const year = new String(article.publication_year).substring(0,4);
+      return year !== undefined && year.toString() === searchWord; // Compare as strings
+    }
+
+    // Otherwise, we just check claims
+    return article.claim?.toLowerCase().includes(searchWord.toLowerCase());
+});
 
   const sortedArticles = filteredArticles.sort((a, b) =>
     (a.claim?.toLowerCase() ?? '').localeCompare(b.claim?.toLowerCase() || '')
@@ -68,7 +79,7 @@ function ShowArticleList() {
             </Link>
             <input
               type='text'
-              placeholder='Search by claim'
+              placeholder='Search by claim/year'
               value={searchWord}
               onChange={handleSearchChange}
               className='form-control mx-3 search-input'
