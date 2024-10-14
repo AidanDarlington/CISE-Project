@@ -38,6 +38,9 @@ export class Article {
 
   @Prop({ type: Boolean, default: false })
   isAnalyzed: boolean;
+
+  @Prop({ required: true })
+  submitterEmail: string;
 }
 
 export const ArticleSchema = SchemaFactory.createForClass(Article);

@@ -5,6 +5,7 @@ export type Article = {
   source?: string;
   publication_year?: Date;
   DOI?: string;
+  submitterEmail?: string;
   claim?: string;
   evidence?: string;
   status?: 'pending' | 'approved' | 'denied' | 'analyzed';
@@ -17,6 +18,7 @@ export const DefaultEmptyArticle: Article = {
   source: '',
   publication_year: undefined,
   DOI: '',
+  submitterEmail: '',
   claim: '',
   evidence: '',
   status: 'pending',

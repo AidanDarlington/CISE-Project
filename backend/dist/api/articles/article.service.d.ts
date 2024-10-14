@@ -1,9 +1,11 @@
 import { Article } from './article.schema';
 import { Model } from 'mongoose';
 import { CreateArticleDto } from './create-article.dto';
+import { MailService } from './mail.service';
 export declare class ArticleService {
     private articleModel;
-    constructor(articleModel: Model<Article>);
+    private readonly mailService;
+    constructor(articleModel: Model<Article>, mailService: MailService);
     test(): string;
     findAll(): Promise<Article[]>;
     findOne(id: string): Promise<Article>;
@@ -33,5 +35,9 @@ export declare class ArticleService {
         __v?: number;
     }>;
     countPendingArticles(): Promise<number>;
-    markAsAnalyzed(id: string): Promise<Article>;
+    markAsAnalyzed(id: string): Promise<import("mongoose").Document<unknown, {}, Article> & Article & {
+        _id: import("mongoose").Types.ObjectId;
+    } & {
+        __v?: number;
+    }>;
 }

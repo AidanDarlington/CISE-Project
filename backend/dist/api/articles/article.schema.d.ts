@@ -11,6 +11,7 @@ export declare class Article {
     updated_date: Date;
     status: string;
     isAnalyzed: boolean;
+    submitterEmail: string;
 }
 export declare const ArticleSchema: import("mongoose").Schema<Article, import("mongoose").Model<Article, any, any, any, import("mongoose").Document<unknown, any, Article> & Article & {
     _id: import("mongoose").Types.ObjectId;

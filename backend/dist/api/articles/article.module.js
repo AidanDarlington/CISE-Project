@@ -12,6 +12,7 @@ const article_controller_1 = require("./article.controller");
 const article_service_1 = require("./article.service");
 const mongoose_1 = require("@nestjs/mongoose");
 const article_schema_1 = require("./article.schema");
+const mail_service_1 = require("./mail.service");
 let ArticleModule = class ArticleModule {
 };
 exports.ArticleModule = ArticleModule;
@@ -21,7 +22,7 @@ exports.ArticleModule = ArticleModule = __decorate([
             mongoose_1.MongooseModule.forFeature([{ name: article_schema_1.Article.name, schema: article_schema_1.ArticleSchema }]),
         ],
         controllers: [article_controller_1.ArticleController],
-        providers: [article_service_1.ArticleService],
+        providers: [article_service_1.ArticleService, mail_service_1.MailService],
     })
 ], ArticleModule);
 //# sourceMappingURL=article.module.js.map

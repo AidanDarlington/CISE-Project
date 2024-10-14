@@ -3,11 +3,13 @@ import { Article } from './article.schema';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 import { CreateArticleDto } from './create-article.dto';
+import { MailService } from './mail.service';
 
 @Injectable()
 export class ArticleService {
   constructor(
     @InjectModel(Article.name) private articleModel: Model<Article>,
+    private readonly mailService: MailService,
   ) {}
 
   test(): string {
@@ -42,15 +44,35 @@ export class ArticleService {
   }
 
   async approveArticle(id: string) {
-    return await this.articleModel
-      .findByIdAndUpdate(id, { status: 'approved' })
+    const article = await this.articleModel
+      .findByIdAndUpdate(id, { status: 'approved' }, { new: true })
       .exec();
+
+    if (article && article.submitterEmail) {
+      await this.mailService.sendEmail(
+        article.submitterEmail,
+        'Article Submission Approved',
+        `Your article titled "${article.title}" has been approved.`,
+      );
+    }
+
+    return article;
   }
 
   async denyArticle(id: string) {
-    return await this.articleModel
-      .findByIdAndUpdate(id, { status: 'denied' })
+    const article = await this.articleModel
+      .findByIdAndUpdate(id, { status: 'denied' }, { new: true })
       .exec();
+
+    if (article && article.submitterEmail) {
+      await this.mailService.sendEmail(
+        article.submitterEmail,
+        'Article Submission Denied',
+        `Your article titled "${article.title}" has been denied.`,
+      );
+    }
+
+    return article;
   }
 
   async countPendingArticles(): Promise<number> {

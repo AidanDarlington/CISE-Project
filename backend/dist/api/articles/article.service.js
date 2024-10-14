@@ -17,9 +17,11 @@ const common_1 = require("@nestjs/common");
 const article_schema_1 = require("./article.schema");
 const mongoose_1 = require("@nestjs/mongoose");
 const mongoose_2 = require("mongoose");
+const mail_service_1 = require("./mail.service");
 let ArticleService = class ArticleService {
-    constructor(articleModel) {
+    constructor(articleModel, mailService) {
         this.articleModel = articleModel;
+        this.mailService = mailService;
     }
     test() {
         return 'article route testing';
@@ -47,31 +49,37 @@ let ArticleService = class ArticleService {
         return deletedArticle;
     }
     async approveArticle(id) {
-        return await this.articleModel
-            .findByIdAndUpdate(id, { status: 'approved' })
+        const article = await this.articleModel
+            .findByIdAndUpdate(id, { status: 'approved' }, { new: true })
             .exec();
+        if (article && article.submitterEmail) {
+            await this.mailService.sendEmail(article.submitterEmail, 'Article Submission Approved', `Your article titled "${article.title}" has been approved.`);
+        }
+        return article;
     }
     async denyArticle(id) {
-        return await this.articleModel
-            .findByIdAndUpdate(id, { status: 'denied' })
+        const article = await this.articleModel
+            .findByIdAndUpdate(id, { status: 'denied' }, { new: true })
             .exec();
+        if (article && article.submitterEmail) {
+            await this.mailService.sendEmail(article.submitterEmail, 'Article Submission Denied', `Your article titled "${article.title}" has been denied.`);
+        }
+        return article;
     }
     async countPendingArticles() {
         return await this.articleModel.countDocuments({ status: 'pending' }).exec();
     }
     async markAsAnalyzed(id) {
-        const article = await this.articleModel.findById(id);
-        if (!article) {
-            throw new common_1.NotFoundException(`Article with ID ${id} not found`);
-        }
-        article.isAnalyzed = true;
-        return article.save();
+        return await this.articleModel
+            .findByIdAndUpdate(id, { status: 'analyzed' })
+            .exec();
     }
 };
 exports.ArticleService = ArticleService;
 exports.ArticleService = ArticleService = __decorate([
     (0, common_1.Injectable)(),
     __param(0, (0, mongoose_1.InjectModel)(article_schema_1.Article.name)),
-    __metadata("design:paramtypes", [mongoose_2.Model])
+    __metadata("design:paramtypes", [mongoose_2.Model,
+        mail_service_1.MailService])
 ], ArticleService);
 //# sourceMappingURL=article.service.js.map
