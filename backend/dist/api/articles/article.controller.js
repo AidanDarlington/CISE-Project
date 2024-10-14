@@ -117,6 +117,18 @@ let ArticleController = class ArticleController {
             }, common_1.HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
+    async markAsAnalyzed(id) {
+        try {
+            await this.articleService.markAsAnalyzed(id);
+            return { message: 'Article marked as analyzed successfully' };
+        }
+        catch {
+            throw new common_1.HttpException({
+                status: common_1.HttpStatus.BAD_REQUEST,
+                error: 'Unable to mark this article as analyzed',
+            }, common_1.HttpStatus.BAD_REQUEST, { cause: console_1.error });
+        }
+    }
 };
 exports.ArticleController = ArticleController;
 __decorate([
@@ -180,6 +192,13 @@ __decorate([
     __metadata("design:paramtypes", []),
     __metadata("design:returntype", Promise)
 ], ArticleController.prototype, "getPendingArticlesCount", null);
+__decorate([
+    (0, common_1.Put)('/:id/analyze'),
+    __param(0, (0, common_1.Param)('id')),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [String]),
+    __metadata("design:returntype", Promise)
+], ArticleController.prototype, "markAsAnalyzed", null);
 exports.ArticleController = ArticleController = __decorate([
     (0, common_1.Controller)('api/articles'),
     __metadata("design:paramtypes", [article_service_1.ArticleService])

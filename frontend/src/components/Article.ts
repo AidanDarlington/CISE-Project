@@ -7,7 +7,7 @@ export type Article = {
   DOI?: string;
   claim?: string;
   evidence?: string;
-  status?: 'pending' | 'approved' | 'denied';
+  status?: 'pending' | 'approved' | 'denied' | 'analyzed';
 };
 
 export const DefaultEmptyArticle: Article = {

@@ -33,4 +33,5 @@ export declare class ArticleService {
         __v?: number;
     }>;
     countPendingArticles(): Promise<number>;
+    markAsAnalyzed(id: string): Promise<Article>;
 }

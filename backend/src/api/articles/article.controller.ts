@@ -163,4 +163,21 @@ export class ArticleController {
       );
     }
   }
+
+  @Put('/:id/analyze')
+  async markAsAnalyzed(@Param('id') id: string) {
+    try {
+      await this.articleService.markAsAnalyzed(id);
+      return { message: 'Article marked as analyzed successfully' };
+    } catch {
+      throw new HttpException(
+        {
+          status: HttpStatus.BAD_REQUEST,
+          error: 'Unable to mark this article as analyzed',
+        },
+        HttpStatus.BAD_REQUEST,
+        { cause: error },
+      );
+    }
+  }
 }

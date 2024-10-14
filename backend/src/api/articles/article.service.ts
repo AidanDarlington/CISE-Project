@@ -6,7 +6,9 @@ import { CreateArticleDto } from './create-article.dto';
 
 @Injectable()
 export class ArticleService {
-  constructor(@InjectModel(Article.name) private articleModel: Model<Article>) {}
+  constructor(
+    @InjectModel(Article.name) private articleModel: Model<Article>,
+  ) {}
 
   test(): string {
     return 'article route testing';
@@ -21,12 +23,17 @@ export class ArticleService {
   }
 
   async create(createArticleDto: CreateArticleDto) {
-    const newArticle = new this.articleModel({ ...createArticleDto, status: 'pending' });
+    const newArticle = new this.articleModel({
+      ...createArticleDto,
+      status: 'pending',
+    });
     return await newArticle.save();
   }
 
   async update(id: string, createArticleDto: CreateArticleDto) {
-    return await this.articleModel.findByIdAndUpdate(id, createArticleDto).exec();
+    return await this.articleModel
+      .findByIdAndUpdate(id, createArticleDto)
+      .exec();
   }
 
   async delete(id: string) {
@@ -35,14 +42,24 @@ export class ArticleService {
   }
 
   async approveArticle(id: string) {
-    return await this.articleModel.findByIdAndUpdate(id, { status: 'approved' }).exec();
+    return await this.articleModel
+      .findByIdAndUpdate(id, { status: 'approved' })
+      .exec();
   }
 
   async denyArticle(id: string) {
-    return await this.articleModel.findByIdAndUpdate(id, { status: 'denied' }).exec();
+    return await this.articleModel
+      .findByIdAndUpdate(id, { status: 'denied' })
+      .exec();
   }
 
   async countPendingArticles(): Promise<number> {
     return await this.articleModel.countDocuments({ status: 'pending' }).exec();
+  }
+
+  async markAsAnalyzed(id: string) {
+    return await this.articleModel
+      .findByIdAndUpdate(id, { status: 'analyzed' })
+      .exec();
   }
 }

@@ -26,4 +26,7 @@ export declare class ArticleController {
     getPendingArticlesCount(): Promise<{
         count: number;
     }>;
+    markAsAnalyzed(id: string): Promise<{
+        message: string;
+    }>;
 }

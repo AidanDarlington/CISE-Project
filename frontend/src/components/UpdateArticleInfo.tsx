@@ -132,7 +132,7 @@ function UpdateArticleInfo() {
               />
             </div>
             <br />
-
+            
             <div className='form-group'>
               <label htmlFor='evidence'>Evidence</label>
               <textarea

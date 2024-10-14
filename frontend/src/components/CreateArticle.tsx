@@ -102,27 +102,6 @@ const CreateArticleComponent = () => {
                 />
               </div>
               <br />
-              <div className="form-group">
-                <input
-                  type="text"
-                  placeholder="Claim"
-                  name="claim"
-                  className="form-control"
-                  value={article.claim}
-                  onChange={onChange}
-                />
-              </div>
-              <br />
-              <div className="form-group">
-                <input
-                  type="text"
-                  placeholder="Evidence"
-                  name="evidence"
-                  className="form-control"
-                  value={article.evidence}
-                  onChange={onChange}
-                />
-              </div>
               <button
                 type="submit"
                 className="btn btn-black mt-4 mb-4 w-100"

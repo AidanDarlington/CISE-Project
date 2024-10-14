@@ -31,24 +31,41 @@ let ArticleService = class ArticleService {
         return await this.articleModel.findById(id).exec();
     }
     async create(createArticleDto) {
-        const newArticle = new this.articleModel({ ...createArticleDto, status: 'pending' });
+        const newArticle = new this.articleModel({
+            ...createArticleDto,
+            status: 'pending',
+        });
         return await newArticle.save();
     }
     async update(id, createArticleDto) {
-        return await this.articleModel.findByIdAndUpdate(id, createArticleDto).exec();
+        return await this.articleModel
+            .findByIdAndUpdate(id, createArticleDto)
+            .exec();
     }
     async delete(id) {
         const deletedArticle = await this.articleModel.findByIdAndDelete(id).exec();
         return deletedArticle;
     }
     async approveArticle(id) {
-        return await this.articleModel.findByIdAndUpdate(id, { status: 'approved' }).exec();
+        return await this.articleModel
+            .findByIdAndUpdate(id, { status: 'approved' })
+            .exec();
     }
     async denyArticle(id) {
-        return await this.articleModel.findByIdAndUpdate(id, { status: 'denied' }).exec();
+        return await this.articleModel
+            .findByIdAndUpdate(id, { status: 'denied' })
+            .exec();
     }
     async countPendingArticles() {
         return await this.articleModel.countDocuments({ status: 'pending' }).exec();
+    }
+    async markAsAnalyzed(id) {
+        const article = await this.articleModel.findById(id);
+        if (!article) {
+            throw new common_1.NotFoundException(`Article with ID ${id} not found`);
+        }
+        article.isAnalyzed = true;
+        return article.save();
     }
 };
 exports.ArticleService = ArticleService;
