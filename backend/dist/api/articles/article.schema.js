@@ -59,7 +59,7 @@ __decorate([
     __metadata("design:type", Boolean)
 ], Article.prototype, "isAnalyzed", void 0);
 __decorate([
-    (0, mongoose_1.Prop)({ required: true }),
+    (0, mongoose_1.Prop)(),
     __metadata("design:type", String)
 ], Article.prototype, "submitterEmail", void 0);
 exports.Article = Article = __decorate([

@@ -39,7 +39,7 @@ export class Article {
   @Prop({ type: Boolean, default: false })
   isAnalyzed: boolean;
 
-  @Prop({ required: true })
+  @Prop()
   submitterEmail: string;
 }
 
