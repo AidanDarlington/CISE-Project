@@ -33,5 +33,9 @@ export declare class ArticleService {
         __v?: number;
     }>;
     countPendingArticles(): Promise<number>;
-    markAsAnalyzed(id: string): Promise<Article>;
+    markAsAnalyzed(id: string): Promise<import("mongoose").Document<unknown, {}, Article> & Article & {
+        _id: import("mongoose").Types.ObjectId;
+    } & {
+        __v?: number;
+    }>;
 }

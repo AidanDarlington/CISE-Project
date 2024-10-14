@@ -60,12 +60,9 @@ let ArticleService = class ArticleService {
         return await this.articleModel.countDocuments({ status: 'pending' }).exec();
     }
     async markAsAnalyzed(id) {
-        const article = await this.articleModel.findById(id);
-        if (!article) {
-            throw new common_1.NotFoundException(`Article with ID ${id} not found`);
-        }
-        article.isAnalyzed = true;
-        return article.save();
+        return await this.articleModel
+            .findByIdAndUpdate(id, { status: 'analyzed' })
+            .exec();
     }
 };
 exports.ArticleService = ArticleService;
