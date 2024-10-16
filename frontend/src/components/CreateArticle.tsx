@@ -102,6 +102,17 @@ const CreateArticleComponent = () => {
                 />
               </div>
               <br />
+              <div className="form-group">
+                <input
+                  type="email"
+                  placeholder="Your Email"
+                  name="submitterEmail"
+                  className="form-control"
+                  value={article.submitterEmail}
+                  onChange={onChange}
+                />
+              </div>
+              <br />
               <button
                 type="submit"
                 className="btn btn-black mt-4 mb-4 w-100"
