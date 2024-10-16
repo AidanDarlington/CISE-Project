@@ -1,12 +1,14 @@
 import React, { useState, useEffect, ChangeEvent, FormEvent } from 'react';
 import { Article } from './Article';
 import Link from 'next/link';
+import { useRouter } from 'next/navigation';
 
 function AnalystReview() {
   const [articles, setArticles] = useState<Article[]>([]);
   const [currentArticle, setCurrentArticle] = useState<Article | null>(null);
   const [claim, setClaim] = useState<string>('');
   const [evidence, setEvidence] = useState<string>('');
+  const router = useRouter();
 
   useEffect(() => {
     fetch('http://localhost:8082/api/articles')
@@ -18,13 +20,13 @@ function AnalystReview() {
       .catch((err) => console.log('Error from AnalystReview: ' + err));
   }, []);
 
-  const analyzeArticle = (article: Article) => {
+  const analyzeArticle = (article: Article, event: React.MouseEvent) => {
+    event.stopPropagation();
     setCurrentArticle(article);
     setClaim(article.claim || '');
     setEvidence(article.evidence || '');
   };
 
-  // Updated to use HTMLTextAreaElement
   const handleClaimChange = (event: ChangeEvent<HTMLTextAreaElement>) => {
     setClaim(event.target.value);
   };
@@ -62,6 +64,10 @@ function AnalystReview() {
     }
   };
 
+  const showArticleDetails = (id: string) => {
+    router.push(`/show-article/${id}`);
+  };
+
   return (
     <div className='ShowArticleList'>
       <div className='container'>
@@ -80,12 +86,12 @@ function AnalystReview() {
             <p>No articles pending analysis</p>
           ) : (
             articles.map((article) => (
-              <div key={article._id} className='card-container'>
+              <div key={article._id} className='card-container' onClick={() => showArticleDetails(article._id || '')}>
                 <div className='desc'>
                   <h2>{article.title}</h2>
                   <h3>{article.author}</h3>
                   <p>{article.claim}</p>
-                  <button onClick={() => analyzeArticle(article)} className='btn btn-outline-success'>
+                  <button onClick={(event) => analyzeArticle(article, event)} className='btn btn-outline-success'>
                     Analyze
                   </button>
                 </div>
@@ -104,7 +110,7 @@ function AnalystReview() {
                   id='claim'
                   name='claim'
                   className='form-control'
-                  rows={4} // Adjust the number of rows as needed
+                  rows={4}
                   value={claim}
                   onChange={handleClaimChange}
                 />
@@ -116,7 +122,7 @@ function AnalystReview() {
                   id='evidence'
                   name='evidence'
                   className='form-control'
-                  rows={6} // Adjust the number of rows as needed
+                  rows={6}
                   value={evidence}
                   onChange={handleEvidenceChange}
                 />

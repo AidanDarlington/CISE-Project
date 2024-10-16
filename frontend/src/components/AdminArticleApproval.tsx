@@ -1,9 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import { Article } from './Article';
 import Link from 'next/link';
+import { useRouter } from 'next/navigation';
 
 const AdminArticleApproval = () => {
   const [articles, setArticles] = useState<Article[]>([]);
+  const router = useRouter();
 
   useEffect(() => {
     fetch('http://localhost:8082/api/articles')
@@ -15,7 +17,8 @@ const AdminArticleApproval = () => {
       .catch((err) => console.log('Error from AdminArticleApproval: ' + err));
   }, []);
 
-  const approveArticle = (id: string) => {
+  const approveArticle = (id: string, event: React.MouseEvent) => {
+    event.stopPropagation();
     fetch(`http://localhost:8082/api/articles/${id}/approve`, { method: 'PUT' })
       .then(() => {
         setArticles(articles.filter(article => article._id !== id));
@@ -23,12 +26,17 @@ const AdminArticleApproval = () => {
       .catch((err) => console.log('Error from approveArticle: ' + err));
   };
 
-  const denyArticle = (id: string) => {
+  const denyArticle = (id: string, event: React.MouseEvent) => {
+    event.stopPropagation();
     fetch(`http://localhost:8082/api/articles/${id}/deny`, { method: 'PUT' })
       .then(() => {
         setArticles(articles.filter(article => article._id !== id));
       })
       .catch((err) => console.log('Error from denyArticle: ' + err));
+  };
+
+  const showArticleDetails = (id: string) => {
+    router.push(`/show-article/${id}`);
   };
 
   return (
@@ -48,13 +56,13 @@ const AdminArticleApproval = () => {
             <p>No pending articles</p>
           ) : (
             articles.map((article) => (
-              <div key={article._id} className='card-container'>
+              <div key={article._id} className='card-container' onClick={() => showArticleDetails(article._id || '')}>
                 <div className='desc'>
                   <h2>{article.title}</h2>
                   <h3>{article.author}</h3>
                   <p>{article.claim}</p>
-                  <button onClick={() => approveArticle(article._id || '')} className='btn btn-outline-success'>Approve</button>
-                  <button onClick={() => denyArticle(article._id || '')} className='btn btn-outline-danger'>Deny</button>
+                  <button onClick={(event) => approveArticle(article._id || '', event)} className='btn btn-outline-success'>Approve</button>
+                  <button onClick={(event) => denyArticle(article._id || '', event)} className='btn btn-outline-danger'>Deny</button>
                 </div>
               </div>
             ))
