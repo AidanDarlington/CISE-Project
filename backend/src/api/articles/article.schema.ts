@@ -31,7 +31,7 @@ export class Article {
 
   @Prop({
     required: true,
-    enum: ['pending', 'approved', 'denied'],
+    enum: ['pending', 'approved', 'denied', 'analyzed'],
     default: 'pending',
   })
   status: string;
@@ -41,6 +41,9 @@ export class Article {
 
   @Prop()
   submitterEmail: string;
+
+  @Prop({ type: [Number], default: [] })
+  ratings: number[];
 }
 
 export const ArticleSchema = SchemaFactory.createForClass(Article);

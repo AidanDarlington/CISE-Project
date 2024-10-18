@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { Article } from './article.schema';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
@@ -83,5 +83,14 @@ export class ArticleService {
     return await this.articleModel
       .findByIdAndUpdate(id, { status: 'analyzed' })
       .exec();
+  }
+
+  async addRating(id: string, rating: number): Promise<Article> {
+    const article = await this.articleModel.findById(id);
+    if (!article) {
+      throw new NotFoundException('Article not found');
+    }
+    article.ratings.push(rating);
+    return article.save();
   }
 }

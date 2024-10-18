@@ -9,6 +9,7 @@ export type Article = {
   claim?: string;
   evidence?: string;
   status?: 'pending' | 'approved' | 'denied' | 'analyzed';
+  ratings?: number[];
 };
 
 export const DefaultEmptyArticle: Article = {
@@ -22,4 +23,5 @@ export const DefaultEmptyArticle: Article = {
   claim: '',
   evidence: '',
   status: 'pending',
+  ratings: [],
 };
