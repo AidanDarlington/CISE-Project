@@ -10,4 +10,5 @@ export class CreateArticleDto {
   submittterEmail?: string;
   claim?: string;
   evidence?: string;
+  ratings?: number[];
 }

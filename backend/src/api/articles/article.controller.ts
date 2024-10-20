@@ -180,4 +180,9 @@ export class ArticleController {
       );
     }
   }
+
+  @Put('/:id/rate')
+  async rateArticle(@Param('id') id: string, @Body('rating') rating: number) {
+    return await this.articleService.addRating(id, rating);
+  }
 }
