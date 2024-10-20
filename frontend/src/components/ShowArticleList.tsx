@@ -12,9 +12,13 @@ function ShowArticleList() {
   const [selectedClaim, setSelectedClaim] = useState<string>('');
   const [role, setRole] = useState<string | null>(null);
   const [pendingCount, setPendingCount] = useState<number>(0);
+<<<<<<< Updated upstream
   const [sortOrder, setSortOrder] = useState<'asc' | 'desc'>('asc');
   const [startDate, setStartDate] = useState<string>('');
   const [endDate, setEndDate] = useState<string>('');
+=======
+  const [suggestions, setSuggestions] = useState<string[]>([]);
+>>>>>>> Stashed changes
 
   useEffect(() => {
     fetch('http://localhost:8082/api/articles')
@@ -68,7 +72,32 @@ function ShowArticleList() {
   }, []);
 
   const handleSearchChange = (e: ChangeEvent<HTMLInputElement>) => {
-    setSearchWord(e.target.value);
+    const value = e.target.value;
+    setSearchWord(value);
+
+    // Generate suggestions
+    const newSuggestions = articles
+
+      .filter(article => {
+        return article.claim?.toLowerCase().includes(value.toLowerCase()) || 
+               new String(article.publication_year).includes(value);
+      })
+
+      .map(article => article.claim); // or map to publication_year if preferred
+
+
+
+    setSuggestions(newSuggestions);
+
+  };
+
+
+
+  const handleSuggestionClick = (suggestion: string) => {
+
+    setSearchWord(suggestion);
+
+    setSuggestions([]);
   };
 
   const handleAuthorChange = (e: ChangeEvent<HTMLSelectElement>) => {
@@ -176,6 +205,7 @@ function ShowArticleList() {
                   <span className='badge badge-danger ml-2 pending-count'>{pendingCount}</span>
                 )}
               </div>
+<<<<<<< Updated upstream
             )}
 
             {/* Analyst-specific section */}
@@ -186,6 +216,21 @@ function ShowArticleList() {
                 </Link>
               </div>
             )}
+=======
+            </div>
+            
+            <div className='list'>
+            {suggestions.length > 0 && (
+            <ul className='suggestions-list'>
+              {suggestions.map((suggestion, index) => (
+                <li key={index} onClick={() => handleSuggestionClick(suggestion)}>
+                  {suggestion}
+                </li>
+              ))}
+            </ul>
+          )}
+          {articleList}</div>
+>>>>>>> Stashed changes
           </div>
         </div>
 
