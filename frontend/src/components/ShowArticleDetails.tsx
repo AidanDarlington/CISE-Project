@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useParams, useRouter } from 'next/navigation';
 import { Article, DefaultEmptyArticle } from './Article';
 import Link from 'next/link';
-import ReactStars from 'react-stars'; // Assuming you're using react-stars for star ratings
+import ReactStars from 'react-stars';
 
 function ShowArticleDetails() {
   const [article, setArticle] = useState<Article>(DefaultEmptyArticle);
@@ -46,11 +46,10 @@ function ShowArticleDetails() {
   };
 
   const onStarClick = (newRating: number) => {
-    setUserRating(newRating);  // Update the local state for the rating
-    handleRatingSubmit(newRating);  // Submit the rating
+    setUserRating(newRating);
+    handleRatingSubmit(newRating);
   };
 
-  // Calculate average rating
   const totalRatings = article.ratings?.length || 0;
   const averageRating = totalRatings
     ? (article.ratings!.reduce((sum, rating) => sum + rating, 0) / totalRatings).toFixed(1)
@@ -75,7 +74,6 @@ function ShowArticleDetails() {
           </div>
           <br />
           <div className='col-md-10 m-auto'>
-            {/* Article details */}
             <table className='table table-hover table-dark table-striped table-bordered'>
               <tbody>
                 <tr>

@@ -40,6 +40,5 @@ export declare class ArticleService {
     } & {
         __v?: number;
     }>;
-    findAllRatingSorted(sortOrder: 'asc' | 'desc'): Promise<Article[]>;
     addRating(id: string, rating: number): Promise<Article>;
 }

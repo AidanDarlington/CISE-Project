@@ -74,21 +74,6 @@ let ArticleService = class ArticleService {
             .findByIdAndUpdate(id, { status: 'analyzed' })
             .exec();
     }
-    async findAllRatingSorted(sortOrder) {
-        const sortDirection = sortOrder === 'asc' ? 1 : -1;
-        return await this.articleModel
-            .aggregate([
-            {
-                $addFields: {
-                    averageRating: { $avg: '$ratings' },
-                },
-            },
-            {
-                $sort: { averageRating: sortDirection },
-            },
-        ])
-            .exec();
-    }
     async addRating(id, rating) {
         const article = await this.articleModel.findById(id);
         if (!article) {

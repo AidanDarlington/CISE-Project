@@ -8,6 +8,11 @@ function AnalystReview() {
   const [currentArticle, setCurrentArticle] = useState<Article | null>(null);
   const [claim, setClaim] = useState<string>('');
   const [evidence, setEvidence] = useState<string>('');
+  const [title, setTitle] = useState<string>('');
+  const [author, setAuthor] = useState<string>('');
+  const [source, setSource] = useState<string>('');
+  const [publicationYear, setPublicationYear] = useState<string>('');
+  const [DOI, setDOI] = useState<string>('');
   const router = useRouter();
 
   useEffect(() => {
@@ -25,14 +30,15 @@ function AnalystReview() {
     setCurrentArticle(article);
     setClaim(article.claim || '');
     setEvidence(article.evidence || '');
+    setTitle(article.title || '');
+    setAuthor(article.author || '');
+    setSource(article.source || '');
+    setPublicationYear(article.publication_year?.toString() || '');
+    setDOI(article.DOI || '');
   };
 
-  const handleClaimChange = (event: ChangeEvent<HTMLTextAreaElement>) => {
-    setClaim(event.target.value);
-  };
-
-  const handleEvidenceChange = (event: ChangeEvent<HTMLTextAreaElement>) => {
-    setEvidence(event.target.value);
+  const handleInputChange = (setter: React.Dispatch<React.SetStateAction<any>>) => (event: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+    setter(event.target.value);
   };
 
   const handleFormSubmit = (event: FormEvent<HTMLFormElement>) => {
@@ -43,6 +49,11 @@ function AnalystReview() {
         ...currentArticle,
         claim,
         evidence,
+        title,
+        author,
+        source,
+        publicationYear: new Date(publicationYear),
+        DOI,
         status: 'analyzed'
       };
 
@@ -105,6 +116,57 @@ function AnalystReview() {
             <h2>Analyzing: {currentArticle.title}</h2>
             <form onSubmit={handleFormSubmit}>
               <div className='form-group'>
+                <label htmlFor='title'>Title</label>
+                <input
+                  id='title'
+                  name='title'
+                  className='form-control'
+                  value={title}
+                  onChange={handleInputChange(setTitle)}
+                />
+              </div>
+              <div className='form-group'>
+                <label htmlFor='author'>Author</label>
+                <input
+                  id='author'
+                  name='author'
+                  className='form-control'
+                  value={author}
+                  onChange={handleInputChange(setAuthor)}
+                />
+              </div>
+              <div className='form-group'>
+                <label htmlFor='source'>Source</label>
+                <input
+                  id='source'
+                  name='source'
+                  className='form-control'
+                  value={source}
+                  onChange={handleInputChange(setSource)}
+                />
+              </div>
+              <div className='form-group'>
+                <label htmlFor='publicationYear'>Publication Year</label>
+                <input
+                  id='publicationYear'
+                  name='publicationYear'
+                  className='form-control'
+                  type='date'
+                  value={publicationYear}
+                  onChange={handleInputChange(setPublicationYear)}
+                />
+              </div>
+              <div className='form-group'>
+                <label htmlFor='DOI'>DOI</label>
+                <input
+                  id='DOI'
+                  name='DOI'
+                  className='form-control'
+                  value={DOI}
+                  onChange={handleInputChange(setDOI)}
+                />
+              </div>
+              <div className='form-group'>
                 <label htmlFor='claim'>Claim</label>
                 <textarea
                   id='claim'
@@ -112,7 +174,7 @@ function AnalystReview() {
                   className='form-control'
                   rows={4}
                   value={claim}
-                  onChange={handleClaimChange}
+                  onChange={handleInputChange(setClaim)}
                 />
               </div>
               <br />
@@ -124,7 +186,7 @@ function AnalystReview() {
                   className='form-control'
                   rows={6}
                   value={evidence}
-                  onChange={handleEvidenceChange}
+                  onChange={handleInputChange(setEvidence)}
                 />
               </div>
               <br />
