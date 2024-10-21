@@ -16,14 +16,14 @@ function ShowArticleDetails() {
     const storedRole = localStorage.getItem('role');
     setRole(storedRole);
 
-    fetch(`http://localhost:8082/api/articles/${id}`)
+    fetch(`https://cise-projecttest-backend.vercel.app/api/articles/${id}`)
       .then((res) => res.json())
       .then((json) => setArticle(json))
       .catch((err) => console.log('Error from ShowArticleDetails: ' + err));
   }, [id]);
 
   const onDeleteClick = (id: string) => {
-    fetch(`http://localhost:8082/api/articles/${id}`, { method: 'DELETE' })
+    fetch(`https://cise-projecttest-backend.vercel.app/api/articles/${id}`, { method: 'DELETE' })
       .then((res) => {
         navigate.push('/');
       })
@@ -32,7 +32,7 @@ function ShowArticleDetails() {
 
   const handleRatingSubmit = async (rating: number) => {
     try {
-      await fetch(`http://localhost:8082/api/articles/${id}/rate`, {
+      await fetch(`https://cise-projecttest-backend.vercel.app/api/articles/${id}/rate`, {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',

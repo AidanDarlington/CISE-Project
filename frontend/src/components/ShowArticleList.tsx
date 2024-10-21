@@ -17,7 +17,7 @@ function ShowArticleList() {
   const [endDate, setEndDate] = useState<string>('');
 
   useEffect(() => {
-    fetch('http://localhost:8082/api/articles')
+    fetch('https://cise-projecttest-backend.vercel.app/api/articles')
       .then((res) => res.json())
       .then((data) => {
         if (Array.isArray(data)) {
@@ -58,7 +58,7 @@ function ShowArticleList() {
     setRole(storedRole);
 
     if (storedRole === 'admin') {
-      fetch('http://localhost:8082/api/articles/pending/count')
+      fetch('https://cise-projecttest-backend.vercel.app/api/articles/pending/count')
         .then((res) => res.json())
         .then((data) => {
           setPendingCount(data.count);
