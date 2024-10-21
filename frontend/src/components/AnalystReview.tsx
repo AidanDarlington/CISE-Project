@@ -57,7 +57,7 @@ function AnalystReview() {
         status: 'analyzed'
       };
 
-      fetch(`http://localhost:8082/api/articles/${currentArticle._id}`, {
+      fetch(`https://cise-projecttest-backend.vercel.app/api/articles/${currentArticle._id}`, {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',
