@@ -33,7 +33,7 @@ function AnalystReview() {
     console.log(claim);
     const filteredClaims = publishedArticles
       .map(article => article.claim)
-      .filter(claimText => claimText && claimText.toLowerCase().includes(claim.toLowerCase()));
+      .filter((claimText): claimText is string => claimText !== undefined && claimText.toLowerCase().includes(claim.toLowerCase()));
       console.log('Current claim:', claim);
       console.log('All articles claims:', publishedArticles.map(article => article.claim));
       console.log('Filtered claims:', filteredClaims);
