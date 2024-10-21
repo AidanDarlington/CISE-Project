@@ -5,6 +5,7 @@ import { useRouter } from 'next/navigation';
 
 function AnalystReview() {
   const [articles, setArticles] = useState<Article[]>([]);
+  const [publishedArticles, setpA] = useState<Article[]>([]);
   const [currentArticle, setCurrentArticle] = useState<Article | null>(null);
   const [claim, setClaim] = useState<string>('');
   const [evidence, setEvidence] = useState<string>('');
@@ -13,6 +14,7 @@ function AnalystReview() {
   const [source, setSource] = useState<string>('');
   const [publicationYear, setPublicationYear] = useState<string>('');
   const [DOI, setDOI] = useState<string>('');
+  const [suggestions, setSuggestions] = useState<string[]>([]);
   const router = useRouter();
 
   useEffect(() => {
@@ -21,9 +23,22 @@ function AnalystReview() {
       .then((data) => {
         const approvedArticles = data.filter((article: Article) => article.status === 'approved');
         setArticles(approvedArticles);
+        const publishedArticles = data.filter((article: Article) => article.status === 'analyzed');
+        setpA(publishedArticles);
       })
       .catch((err) => console.log('Error from AnalystReview: ' + err));
   }, []);
+
+  useEffect(() => {
+    console.log(claim);
+    const filteredClaims = publishedArticles
+      .map(article => article.claim)
+      .filter(claimText => claimText && claimText.toLowerCase().includes(claim.toLowerCase()));
+      console.log('Current claim:', claim);
+      console.log('All articles claims:', publishedArticles.map(article => article.claim));
+      console.log('Filtered claims:', filteredClaims);
+      setSuggestions(filteredClaims);
+  }, [claim, articles]);
 
   const analyzeArticle = (article: Article, event: React.MouseEvent) => {
     event.stopPropagation();
@@ -176,6 +191,13 @@ function AnalystReview() {
                   value={claim}
                   onChange={handleInputChange(setClaim)}
                 />
+                {suggestions.length > 0 && (
+                  <ul className='suggestions'>
+                    {suggestions.map((suggestion, index) => (
+                      <li key={index} onClick={() => setClaim(suggestion)}>{suggestion}</li>
+                    ))}
+                  </ul>
+                )}
               </div>
               <br />
               <div className='form-group'>
