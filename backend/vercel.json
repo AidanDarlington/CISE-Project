@@ -9,7 +9,7 @@
   "rewrites": [
     {
       "source": "/(.*)",
-      "dest": "src/main.ts"
+      "destination": "src/main.ts"
     }
   ]
 }
