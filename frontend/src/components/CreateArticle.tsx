@@ -14,7 +14,7 @@ const CreateArticleComponent = () => {
   const onSubmit = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     console.log(article);
-    fetch("https://cise-projecttest-backend.vercel.app/api/articles", {
+    fetch("https://cise-project-backend.vercel.app/api/articles", {
       method: 'POST',
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(article)

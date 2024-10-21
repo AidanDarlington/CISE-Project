@@ -10,7 +10,7 @@ function UpdateArticleInfo() {
   const router = useRouter();
 
   useEffect(() => {
-    fetch(`https://cise-projecttest-backend.vercel.app/api/articles/${id}`)
+    fetch(`https://cise-project-backend.vercel.app/api/articles/${id}`)
       .then((res) => res.json())
       .then((json) => setArticle(json))
       .catch((err) => console.log('Error from UpdateArticleInfo: ' + err));
@@ -27,7 +27,7 @@ function UpdateArticleInfo() {
   const onSubmit = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 
-    fetch(`https://cise-projecttest-backend.vercel.app/api/articles/${id}`, {
+    fetch(`https://cise-project-backend.vercel.app/api/articles/${id}`, {
       method: 'PUT',
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(article)

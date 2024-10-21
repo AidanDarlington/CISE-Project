@@ -18,7 +18,7 @@ function AnalystReview() {
   const router = useRouter();
 
   useEffect(() => {
-    fetch('https://cise-projecttest-backend.vercel.app/api/articles')
+    fetch('https://cise-project-backend.vercel.app/api/articles')
       .then((res) => res.json())
       .then((data) => {
         const approvedArticles = data.filter((article: Article) => article.status === 'approved');
@@ -72,7 +72,7 @@ function AnalystReview() {
         status: 'analyzed'
       };
 
-      fetch(`https://cise-projecttest-backend.vercel.app/api/articles/${currentArticle._id}`, {
+      fetch(`https://cise-project-backend.vercel.app/api/articles/${currentArticle._id}`, {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',

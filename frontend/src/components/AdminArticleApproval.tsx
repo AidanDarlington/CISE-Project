@@ -8,7 +8,7 @@ const AdminArticleApproval = () => {
   const router = useRouter();
 
   useEffect(() => {
-    fetch('https://cise-projecttest-backend.vercel.app/api/articles')
+    fetch('https://cise-project-backend.vercel.app/api/articles')
       .then((res) => res.json())
       .then((data) => {
         const pendingArticles = data.filter((article: Article) => article.status === 'pending');
@@ -19,7 +19,7 @@ const AdminArticleApproval = () => {
 
   const approveArticle = (id: string, event: React.MouseEvent) => {
     event.stopPropagation();
-    fetch(`https://cise-projecttest-backend.vercel.app/api/articles/${id}/approve`, { method: 'PUT' })
+    fetch(`https://cise-project-backend.vercel.app/api/articles/${id}/approve`, { method: 'PUT' })
       .then(() => {
         setArticles(articles.filter(article => article._id !== id));
       })
@@ -28,7 +28,7 @@ const AdminArticleApproval = () => {
 
   const denyArticle = (id: string, event: React.MouseEvent) => {
     event.stopPropagation();
-    fetch(`https://cise-projecttest-backend.vercel.app/api/articles/${id}/deny`, { method: 'PUT' })
+    fetch(`https://cise-project-backend.vercel.app/api/articles/${id}/deny`, { method: 'PUT' })
       .then(() => {
         setArticles(articles.filter(article => article._id !== id));
       })
