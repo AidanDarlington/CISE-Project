@@ -16,7 +16,7 @@ function AnalystReview() {
   const router = useRouter();
 
   useEffect(() => {
-    fetch('http://localhost:8082/api/articles')
+    fetch('https://cise-projecttest-backend.vercel.app/api/articles')
       .then((res) => res.json())
       .then((data) => {
         const approvedArticles = data.filter((article: Article) => article.status === 'approved');
